@@ -1,0 +1,26 @@
+version: '3.3'
+
+services:
+  backend:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_HOST=db
+      - DB_USER=vaibhav
+      - DB_PASSWORD=Vaibhav@123
+      - DB_NAME=mydatabase
+      - TABLE_NAME=items
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: vaibhav
+      MYSQL_PASSWORD: Vaibhav@123
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"

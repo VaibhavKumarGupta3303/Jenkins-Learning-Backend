@@ -1,0 +1,50 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
+
+# Environment variables
+.env
+.env.*
+
+# Flask instance folder (if used)
+instance/
+
+# Log files
+*.log
+
+# IDE/editor settings
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# macOS/Windows system files
+.DS_Store
+Thumbs.db
+
+# Compiled files / builds
+build/
+dist/
+*.egg-info/
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+
+# Database files (if local, SQLite etc.)
+*.sqlite3
+*.db
+*.sql
+
+# Pipenv or Poetry files (optional)
+Pipfile.lock
+poetry.lock
