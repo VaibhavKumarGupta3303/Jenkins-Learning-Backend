@@ -4,13 +4,18 @@ import mysql.connector
 from db import get_connection
 import os
 from dotenv import load_dotenv
-
+from prometheus_flask_exporter import PrometheusMetrics
+from prometheus_client import Counter
 # Load environment variables
 load_dotenv()
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for frontend
 
+metrics = PrometheusMetrics(app)
+
+data_hit_counter = Counter('get_data_hits', 'Number of times /api/data has been called')
+post_data_counter = Counter('post_data_hits', 'Number of times data was posted')
 
 @app.route('/', methods=['GET'])
 def check_backend_on():
@@ -59,8 +64,10 @@ def get_data():
         cursor = conn.cursor(dictionary=True)
         cursor.execute(f"SELECT * FROM {table_name}")
         data = cursor.fetchall()
+        data_hit_counter.inc() 
         cursor.close()
         conn.close()
+        
         return jsonify(data), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -76,6 +83,7 @@ def insert_data():
         conn = get_connection()
         conn.database = db_name
         cursor = conn.cursor()
+        post_data_counter.inc()
 
         # Get data from request
         data = request.get_json()
